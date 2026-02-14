@@ -26,7 +26,7 @@ export default function Special() {
 
   useEffect(() => {
     // 🎵 AUDIO SETUP
-    const audio = new Audio("/music/special.mp3");
+    const audio = new Audio("/special.mp3");
     audio.loop = true;
     audioRef.current = audio;
 

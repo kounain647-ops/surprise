@@ -3,11 +3,42 @@ import "../styles/home.css";
 
 export default function Home() {
   const canvasRef = useRef(null);
+  const audioRef = useRef(null);
   const [loaded, setLoaded] = useState(false);
 
   // 🎬 cinematic intro loader
   useEffect(() => {
     setTimeout(() => setLoaded(true), 2500);
+  }, []);
+
+  // 🎵 BACKGROUND MUSIC
+  useEffect(() => {
+    const audio = new Audio("/home.mp3"); 
+    audio.loop = true;
+    audio.volume = 0;
+    audioRef.current = audio;
+
+    const startMusic = () => {
+      audio.play().catch(() => {});
+
+      // 🎬 cinematic fade-in
+      let vol = 0;
+      const fade = setInterval(() => {
+        if (vol < 0.7) {
+          vol += 0.03;
+          audio.volume = vol;
+        } else {
+          clearInterval(fade);
+        }
+      }, 200);
+    };
+
+    // mobile autoplay fix
+    document.addEventListener("click", startMusic, { once: true });
+
+    return () => {
+      audio.pause();
+    };
   }, []);
 
   // 🌌 galaxy + shooting meteors
@@ -29,7 +60,6 @@ export default function Home() {
     const stars = [];
     const meteors = [];
 
-    // ⭐ stars
     for (let i = 0; i < 120; i++) {
       stars.push({
         x: Math.random() * canvas.width,
@@ -39,14 +69,12 @@ export default function Home() {
       });
     }
 
-    // 🌠 create meteors
     const createMeteor = () => {
       meteors.push({
         x: Math.random() * canvas.width,
         y: -50,
         length: Math.random() * 80 + 40,
         speed: Math.random() * 6 + 4,
-        opacity: 1,
       });
     };
 
@@ -55,7 +83,7 @@ export default function Home() {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // draw stars
+      // ⭐ stars
       ctx.fillStyle = "white";
       stars.forEach((s) => {
         ctx.beginPath();
@@ -66,7 +94,7 @@ export default function Home() {
         if (s.y < 0) s.y = canvas.height;
       });
 
-      // draw meteors
+      // 🌠 meteors
       meteors.forEach((m, index) => {
         ctx.beginPath();
         const gradient = ctx.createLinearGradient(
@@ -106,7 +134,6 @@ export default function Home() {
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.animationDuration = Math.random() * 2 + 2 + "s";
       document.body.appendChild(heart);
-
       setTimeout(() => heart.remove(), 4000);
     }
   };
@@ -122,6 +149,11 @@ export default function Home() {
   return (
     <div className="home" onClick={createHearts}>
       <canvas ref={canvasRef} className="galaxy"></canvas>
+
+      {/* 🎵 music glow indicator */}
+      <div className="music-indicator">
+        🎵 playing
+      </div>
 
       <div className="content">
         <h1>Our Universe 💫</h1>

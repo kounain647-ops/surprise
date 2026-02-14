@@ -14,7 +14,7 @@ export default function Reasons() {
     if (!started) return;
 
     const music = new Howl({
-      src: ["/reason1.mp3"],
+      src: ["/reason.mp3"],
       volume: 0,
       loop: true,
     });

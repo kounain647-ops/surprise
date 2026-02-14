@@ -103,4 +103,20 @@ body {
       opacity: 0;
     }
   }
-  
+  /* 🎵 music pulse indicator */
+.music-indicator {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  color: white;
+  font-size: 14px;
+  opacity: 0.7;
+  letter-spacing: 2px;
+  animation: musicPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes musicPulse {
+  0% { transform: scale(1); opacity: .6; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: .6; }
+}

@@ -13,7 +13,7 @@ export default function Proposal() {
   // 🎵 Cinematic Music
   useEffect(() => {
     const music = new Howl({
-      src: ["/reason.mp3"], // put in public folder
+      src: ["/proposal.mp3"], // put in public folder
       volume: 0,
       loop: true,
     });
